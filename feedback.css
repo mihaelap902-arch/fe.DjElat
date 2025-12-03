@@ -1,0 +1,206 @@
+/* --- Stiluri Specifice Paginii de Feedback --- */
+
+/* Preluăm background-ul negru și stilul Poppins din style.css */
+/* Asigurăm că body-ul folosește body-ul din style.css (negru) */
+
+
+/* Secțiunea de Conținut */
+.feedback-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    z-index: 5;
+}
+
+.feedback-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #ff00ff; /* Culoare vibrantă */
+    text-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
+    margin-bottom: 10px;
+}
+
+.feedback-tagline {
+    font-size: 1.2rem;
+    color: #00ffcc;
+    max-width: 600px;
+    margin-bottom: 50px;
+}
+
+/* --- Animația Mesajelor (Floating Feedback) --- */
+
+.message-animation-area {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    pointer-events: none; /* Permite interacțiunea cu textul de sub el */
+    overflow: hidden;
+}
+
+.feedback-message {
+    position: absolute;
+    padding: 10px 15px;
+    background-color: rgba(255, 255, 255, 0.9); /* Bule de chat albe */
+    color: #000;
+    border-radius: 20px;
+    font-weight: 600;
+    white-space: nowrap;
+    opacity: 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    /* Animație de mișcare și apariție */
+    animation: floatMessage 15s linear infinite;
+}
+
+/* Definirea animației pentru saritul mesajelor */
+@keyframes floatMessage {
+    0% {
+        transform: translate(0, 100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translate(0, -100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Ajustări de poziție și viteză pentru fiecare mesaj (setate în JS) */
+/* Acestea vor fi generate dinamic de JS pentru a asigura varietatea */
+
+
+/* --- Efectul de Confetti (Re-adăugat local) --- */
+
+.confetti-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+/* Efectul de Confetti */
+.confetti-container {
+    /* ... (stilurile anterioare) ... */
+    z-index: 1; 
+    overflow: hidden;
+}
+
+/* ... (alte stiluri pentru .confetti, .confetti.star) ... */
+
+@keyframes fall {
+    0% { transform: translateY(-100vh) rotate(0deg); opacity: 0.8; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* Animația de cădere a confetti-ului */
+@keyframes fall {
+    0% { transform: translateY(-100vh) rotate(0deg); opacity: 0.8; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* Stiluri Confetti: Preluăm stilurile de bază pentru ca elementele să fie vizibile */
+.confetti {
+    position: absolute;
+    opacity: 0.8;
+    animation: fall linear infinite; /* Aici se face apelul la @keyframes fall */
+}
+
+.confetti.star {
+    /* Asigură-te că stilul de bază al stelei este acolo */
+    width: 0;
+    height: 0;
+    background: none;
+    /* ... (restul stilurilor pentru stelute) ... */
+}
+/* Stilurile pentru .confetti, .confetti:nth-child(n) și @keyframes fall 
+   pot fi preluate direct din `style.css` de la Meniu sau generate în `feedback.js`
+   pentru a păstra separarea logică a fișierelor. Le vom genera în JS. */
+
+
+/* Adaptare (Responsivitate) */
+@media (max-width: 768px) {
+    .feedback-title {
+        font-size: 2.5rem;
+    }
+
+    .feedback-tagline {
+        font-size: 1rem;
+        margin-bottom: 30px;
+    }
+}
+
+/* Asigură-te că body-ul permite elementelor absolute să se raporteze la el */
+body {
+    position: relative; 
+    min-height: 100vh;
+    /* Optional: overflow: hidden; pentru a preveni scroll-ul cauzat de fulgi */
+}
+
+/* Containerul fulgilor: stă fix și deasupra tuturor elementelor */
+.snowflakes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* FOARTE IMPORTANT: Permite clic-uri pe elementele de sub fulgi */
+    z-index: 9999; 
+}
+
+/* Animația de cădere: de sus (0) până jos (100vh) */
+@keyframes fall {
+    to {
+        transform: translateY(100vh);
+    }
+}
+
+/* Stilul de bază pentru un fulg (punct alb, rotund) */
+.snowflake {
+    position: absolute;
+    background-color: white;
+    border-radius: 50%;
+    animation: fall linear infinite;
+}
+
+/* Variații pentru fulgi (Mărime, Blur, Viteză) */
+.snowflake:nth-child(even) {
+    width: 3px;
+    height: 3px;
+    opacity: 0.6;
+    filter: blur(0.5px);
+    animation-duration: 10s;
+    animation-delay: -5s; 
+}
+
+.snowflake:nth-child(3n) {
+    width: 5px;
+    height: 5px;
+    opacity: 0.9;
+    filter: blur(1.5px);
+    animation-duration: 15s;
+    animation-delay: -10s;
+}
+
+.snowflake:nth-child(5n) {
+    width: 2px;
+    height: 2px;
+    opacity: 0.5;
+    filter: blur(0.2px);
+    animation-duration: 8s;
+    animation-delay: -3s;
+}

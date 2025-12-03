@@ -1,0 +1,209 @@
+:root {
+    /* Culorile pentru segmentele roții */
+    --color-red: #E74C3C;
+    --color-white: #ECF0F1;
+    --color-dark-red: #C0392B;
+    --color-light-gray: #BDC3C7;
+    --color-silver: #A0A0A0; /* O nuanță mai deschisă de argintiu */
+    
+    /* Culorile și conținutul segmentelor roții - Folosim conic-gradient */
+    --segments: 
+        var(--color-red) 0%, var(--color-red) 16.66%, 
+        var(--color-white) 16.66%, var(--color-white) 33.32%, 
+        var(--color-red) 33.32%, var(--color-red) 49.98%,
+        var(--color-white) 49.98%, var(--color-white) 66.64%, 
+        var(--color-red) 66.64%, var(--color-red) 83.3%,
+        var(--color-white) 83.3%, var(--color-white) 100%;
+}
+
+body {
+    background-color: #000;
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    overflow-x: hidden; /* Previne scroll-ul orizontal din cauza fulgilor */
+}
+
+/* --- Fulgii de Zăpadă (Snowflakes) --- */
+.snowflake {
+    color: #fff;
+    font-size: 1.5em;
+    position: absolute;
+    top: -10vh; /* Încep de deasupra */
+    opacity: 0.8;
+    z-index: 1;
+    animation: fall linear infinite;
+    pointer-events: none; /* Nu interacționează cu cursorul */
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(105vh);
+    }
+}
+
+/* --- Banner-ul Strălucitor --- */
+.banner-top {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #fff;
+    padding: 15px 30px;
+    margin-bottom: 40px;
+    
+    /* Efectul de Argintiu Strălucitor (Silver/Shining) */
+    background: linear-gradient(45deg, #bbb, #fff, #bbb);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent; /* Face textul transparent pentru a vedea gradientul */
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.7); /* Adaugă strălucire */
+    border-radius: 8px;
+    border: 1px solid #fff;
+    z-index: 10;
+}
+
+/* --- Roata Norocului (Globul de Anul Nou) --- */
+.wheel-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+    z-index: 5;
+}
+
+.wheel-globe {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: conic-gradient(var(--segments));
+    box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.5), /* Stralucire de glob */
+        0 0 0 10px var(--color-silver), /* Margine de glob argintie */
+        0 0 0 15px #000; /* Margine neagra pentru a separa de sageta */
+    transition: transform 5s cubic-bezier(0.25, 0.1, 0.25, 1); /* Animația de rotire */
+    position: relative;
+}
+
+/* Designul central al globului */
+.wheel-center-design {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #333;
+    border: 5px solid gold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.center-text {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: gold;
+}
+
+/* Săgeata Indicatoare (Indicator) - Verde */
+.indicator {
+    position: absolute;
+    top: -20px; /* Poziționat deasupra globului */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0; 
+    height: 0; 
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 25px solid #2ECC71; /* Verde */
+    box-shadow: 0 0 10px #2ECC71;
+    z-index: 10;
+}
+
+/* --- Butonul Spin --- */
+#spin-button {
+    padding: 15px 30px;
+    margin-top: 25px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #000;
+    background-color: #F1C40F; /* Galben auriu pentru contrast */
+    border: 3px solid #E67E22;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    z-index: 5;
+}
+
+#spin-button:hover {
+    background-color: #F39C12;
+}
+
+#spin-button:active {
+    transform: scale(0.98);
+}
+
+#spin-button:disabled {
+    background-color: #7f8c8d;
+    cursor: not-allowed;
+    border-color: #95a5a6;
+}
+
+/* --- Mesajul de Rezultat --- */
+#result-message {
+    margin-top: 20px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #2ECC71; /* Verde pentru câștig */
+    min-height: 40px; /* Asigură că spațiul nu se mișcă la afișarea textului */
+}
+
+/* --- Confetti (Simplu) --- */
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #FFD700; /* Auriu */
+    opacity: 0;
+    animation: confetti-fall 2s ease-out forwards;
+}
+
+@keyframes confetti-fall {
+    0% {
+        opacity: 1;
+        transform: translateY(0) rotate(0deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(500px) rotate(720deg);
+    }
+}
+
+/* --- Adaptare pentru Mobil (Responsive Design) --- */
+@media (max-width: 600px) {
+    .banner-top {
+        font-size: 1.2em;
+        margin-bottom: 20px;
+    }
+    
+    .wheel-globe {
+        width: 250px;
+        height: 250px;
+    }
+
+    #spin-button {
+        padding: 10px 20px;
+        font-size: 1.2em;
+    }
+
+    #result-message {
+        font-size: 1.2em;
+    }
+}
